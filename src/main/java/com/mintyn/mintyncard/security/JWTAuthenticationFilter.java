@@ -1,6 +1,6 @@
 package com.mintyn.mintyncard.security;
 
-import com.mintyn.mintynassessment.repository.JwtTokenRepository;
+import com.mintyn.mintyncard.repository.JwtTokenRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

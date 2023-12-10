@@ -1,7 +1,7 @@
 package com.mintyn.mintyncard.security;
 
-import com.mintyn.mintynassessment.repository.UserRepository;
-import com.mintyn.mintynassessment.utils.SecurityUtils;
+import com.mintyn.mintyncard.repository.UserRepository;
+import com.mintyn.mintyncard.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,8 +1,7 @@
 package com.mintyn.mintyncard.repository;
 
-
-import com.mintyn.mintynassessment.entity.JwtToken;
-import com.mintyn.mintynassessment.entity.User;
+import com.mintyn.mintyncard.entity.JwtToken;
+import com.mintyn.mintyncard.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

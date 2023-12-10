@@ -1,6 +1,6 @@
 package com.mintyn.mintyncard.config;
 
-import com.mintyn.mintynassessment.security.JWTAuthenticationFilter;
+import com.mintyn.mintyncard.security.JWTAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
