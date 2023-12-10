@@ -29,7 +29,7 @@ public class JwtToken {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
-    public User user;
+    public Customer customer;
 
     private Date generatedAt;
 

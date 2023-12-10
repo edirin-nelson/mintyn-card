@@ -1,8 +1,6 @@
 package com.mintyn.mintyncard.exceptions;
 
-
-import com.isdservice.qrcpay.dto.response.ErrorResponse;
-import com.isdservice.qrcpay.dto.response.ExceptionResponse;
+import com.mintyn.mintyncard.dto.response.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,16 +64,4 @@ public class GlobalException {
 
         return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
     }
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(TransactionNotFoundException.class)
-    public ResponseEntity<ExceptionResponse> transactionNotFound(TransactionNotFoundException e, HttpServletRequest request){
-        ExceptionResponse er = ExceptionResponse.builder()
-                .errorMessage(e.getMessage())
-                .errorPath(request.getRequestURI())
-                .errorStatusCode(HttpStatus.NOT_FOUND)
-                .errorTime(LocalDateTime.now())
-                .build();
-        return new ResponseEntity<>(er,HttpStatus.NOT_FOUND);
-    }
-
 }

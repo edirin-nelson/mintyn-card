@@ -48,7 +48,7 @@ public class SecurityConfigFilter {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 
-                // this signout the user once the "/api/v1/logout" endpoint is called
+                // this signout the customer once the "/api/v1/logout" endpoint is called
                 .logout((logout)->logout.logoutUrl("/api/v1/logout")
                         .addLogoutHandler(logoutHandler)
                         .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext()))

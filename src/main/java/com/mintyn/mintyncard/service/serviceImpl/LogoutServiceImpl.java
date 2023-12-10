@@ -1,8 +1,8 @@
 package com.mintyn.mintyncard.service.serviceImpl;
 
-import com.mintyn.mintynassessment.repository.JwtTokenRepository;
-import com.mintyn.mintynassessment.repository.UserRepository;
-import com.mintyn.mintynassessment.security.JwtService;
+import com.mintyn.mintyncard.repository.CustomerRepository;
+import com.mintyn.mintyncard.repository.JwtTokenRepository;
+import com.mintyn.mintyncard.security.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LogoutServiceImpl implements LogoutHandler {
     private  final JwtService jwtUtils;
-    private final UserRepository employeeRepository;
+    private final CustomerRepository employeeRepository;
     private final JwtTokenRepository jwtTokenRepository;
 
     @Override
@@ -31,13 +31,13 @@ public class LogoutServiceImpl implements LogoutHandler {
         userEmail = jwtUtils.extractUsername(jwt);
 
         var user = employeeRepository.findByEmail(userEmail)
-                .orElse(null); // throw a null if the user is not found.
+                .orElse(null); // throw a null if the customer is not found.
         var token = jwtTokenRepository.findByToken(jwt)
                 .orElse(null);
         if (token == null && user == null) {
             return; // does nothing if either one is null
         }
-        assert user != null; // this make sure the user is not null
+        assert user != null; // this make sure the customer is not null
         employeeRepository.save(user);
 
         assert token != null; //this make sure the token is not null

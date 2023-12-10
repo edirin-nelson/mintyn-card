@@ -1,6 +1,6 @@
 package com.mintyn.mintyncard.entity;
 
-import com.mintyn.mintynassessment.enums.Role;
+import com.mintyn.mintyncard.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -19,8 +19,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "_users")
-public class User implements UserDetails {
+@Table(name = "customer")
+public class Customer implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

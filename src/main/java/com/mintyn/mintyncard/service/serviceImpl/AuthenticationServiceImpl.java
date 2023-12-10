@@ -1,15 +1,14 @@
 package com.mintyn.mintyncard.service.serviceImpl;
 
-
-import com.mintyn.mintynassessment.dto.request.LoginRequest;
-import com.mintyn.mintynassessment.dto.response.LoginResponse;
-import com.mintyn.mintynassessment.entity.JwtToken;
-import com.mintyn.mintynassessment.entity.User;
-import com.mintyn.mintynassessment.exceptions.UserNotFoundException;
-import com.mintyn.mintynassessment.repository.JwtTokenRepository;
-import com.mintyn.mintynassessment.repository.UserRepository;
-import com.mintyn.mintynassessment.security.JwtService;
-import com.mintyn.mintynassessment.service.AuthenticationService;
+import com.mintyn.mintyncard.dto.request.LoginRequest;
+import com.mintyn.mintyncard.dto.response.LoginResponse;
+import com.mintyn.mintyncard.entity.Customer;
+import com.mintyn.mintyncard.entity.JwtToken;
+import com.mintyn.mintyncard.exceptions.UserNotFoundException;
+import com.mintyn.mintyncard.repository.CustomerRepository;
+import com.mintyn.mintyncard.repository.JwtTokenRepository;
+import com.mintyn.mintyncard.security.JwtService;
+import com.mintyn.mintyncard.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    private final UserRepository userRepository;
+    private final CustomerRepository userRepository;
     private final JwtTokenRepository jwtTokenRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
@@ -29,9 +28,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public LoginResponse authenticateUser(LoginRequest request) throws UserNotFoundException {
-        var user = userRepository.findByEmail(request.getEmail()).orElseThrow(()-> new UserNotFoundException("User with email: " +request.getEmail() +" not found"));
-        user.setEnabled(true);
-        userRepository.save(user);
+        var customer = userRepository.findByEmail(request.getEmail()).orElseThrow(()-> new UserNotFoundException("Customer with email: " +request.getEmail() +" not found"));
+        customer.setEnabled(true);
+        userRepository.save(customer);
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -39,30 +38,30 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                         request.getPassword()
                 )
         );
-        revokeToken(user);
-        var jwtToken = jwtService.generateToken(user);
-        saveToken(user,jwtToken);
+        revokeToken(customer);
+        var jwtToken = jwtService.generateToken(customer);
+        saveToken(customer,jwtToken);
 
         return LoginResponse.builder()
-                .userID(user.getId().toString())
+                .userID(customer.getId().toString())
                 .token(jwtToken)
                 .expiredAt(jwtService.extractExpiration(jwtToken))
-                .firstName(user.getFirstName())
-                .userType(user.getRole().toString())
+                .firstName(customer.getFirstName())
+                .userType(customer.getRole().toString())
                 .build();
     }
 
-    private void saveToken(User user, String jwtToken) {
+    private void saveToken(Customer customer, String jwtToken) {
         JwtToken token = JwtToken.builder()
                 .token(jwtToken)
                 .expired(false)
                 .revoked(false)
-                .user(user)
+                .customer(customer)
                 .build();
         jwtTokenRepository.save(token);
     }
 
-    private void revokeToken(User user){
+    private void revokeToken(Customer user){
         var validTokenByUser= jwtTokenRepository.findTokenByUserAndExpiredIsFalseAndRevokedIsFalse(user);
 
         if(validTokenByUser.isEmpty()) return;

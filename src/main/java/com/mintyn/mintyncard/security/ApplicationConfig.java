@@ -1,6 +1,6 @@
 package com.mintyn.mintyncard.security;
 
-import com.mintyn.mintyncard.repository.UserRepository;
+import com.mintyn.mintyncard.repository.CustomerRepository;
 import com.mintyn.mintyncard.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -20,12 +20,12 @@ import org.springframework.web.client.RestTemplate;
 
 // this class creates bean to be used with the program
 public class ApplicationConfig {
-    private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
 
     @Bean
     public UserDetailsService userDetailsService(){
-        return username ->  userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User doesn't exist"));
+        return username ->  customerRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Customer doesn't exist"));
     }
 
     @Bean
