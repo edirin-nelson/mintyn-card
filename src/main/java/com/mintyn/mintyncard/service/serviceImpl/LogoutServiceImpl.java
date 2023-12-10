@@ -1,7 +1,7 @@
 package com.mintyn.mintyncard.service.serviceImpl;
 
 import com.mintyn.mintyncard.repository.CustomerRepository;
-import com.mintyn.mintyncard.repository.JwtTokenRepository;
+import com.mintyn.mintyncard.security.repository.JwtTokenRepository;
 import com.mintyn.mintyncard.security.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

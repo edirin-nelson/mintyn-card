@@ -1,5 +1,6 @@
-package com.mintyn.mintyncard.entity;
+package com.mintyn.mintyncard.security.model;
 
+import com.mintyn.mintyncard.entity.Customer;
 import jakarta.persistence.*;
 import lombok.*;
 

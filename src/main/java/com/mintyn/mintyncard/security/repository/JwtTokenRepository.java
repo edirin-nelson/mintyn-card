@@ -1,6 +1,6 @@
-package com.mintyn.mintyncard.repository;
+package com.mintyn.mintyncard.security.repository;
 
-import com.mintyn.mintyncard.entity.JwtToken;
+import com.mintyn.mintyncard.security.model.JwtToken;
 import com.mintyn.mintyncard.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 

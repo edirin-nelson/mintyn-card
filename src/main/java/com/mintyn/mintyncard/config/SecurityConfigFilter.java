@@ -27,7 +27,7 @@ public class SecurityConfigFilter {
 
 
     private final String[] WHITE_LIST = new String[]{
-            "/password/**"
+            "/api/v1/card/**"
     };
 
 
