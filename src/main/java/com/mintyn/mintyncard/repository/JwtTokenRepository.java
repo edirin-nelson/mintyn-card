@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface JwtTokenRepository extends JpaRepository<JwtToken, Integer> {
     Optional<JwtToken> findByToken(String token);
 
-    List<JwtToken> findTokenByUserAndExpiredIsFalseAndRevokedIsFalse(Customer customer);
+    List<JwtToken> findTokenByCustomerAndExpiredIsFalseAndRevokedIsFalse(Customer customer);
 }

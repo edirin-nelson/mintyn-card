@@ -62,7 +62,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     private void revokeToken(Customer user){
-        var validTokenByUser= jwtTokenRepository.findTokenByUserAndExpiredIsFalseAndRevokedIsFalse(user);
+        var validTokenByUser= jwtTokenRepository.findTokenByCustomerAndExpiredIsFalseAndRevokedIsFalse(user);
 
         if(validTokenByUser.isEmpty()) return;
 
