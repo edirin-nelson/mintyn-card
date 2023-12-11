@@ -20,13 +20,14 @@ public class Card {
 
     private String number;
 
-    @Enumerated(EnumType.STRING)
-    private CardScheme scheme;
+//    @Enumerated(EnumType.STRING)
+    private String scheme;
 
     @Enumerated(EnumType.STRING)
     private CardType type;
 
-    private String bank;
+    @OneToOne
+    private Bank bank;
 
     private Boolean valid;
 }

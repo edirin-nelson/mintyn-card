@@ -1,7 +1,8 @@
 package com.mintyn.mintyncard.service;
 
 import com.mintyn.mintyncard.entity.Card;
+import reactor.core.publisher.Mono;
 
 public interface CardService {
-    Card verifyCard(String cardNumber);
+    Mono<Card> verifyCard(String cardNumber);
 }

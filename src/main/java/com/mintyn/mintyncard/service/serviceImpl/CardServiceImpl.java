@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 @Service
 @RequiredArgsConstructor
@@ -19,29 +20,31 @@ public class CardServiceImpl implements CardService {
     private final CardRepository cardRepository;
 
     @Override
-    public Card verifyCard(String cardNumber) {
+    public Mono<Card> verifyCard(String cardNumber) {
         // Call Binlist API
-        Mono<BinlistResponse> responseMono = webClient.get()
+        var response = webClient.get()
                 .uri("/{cardNumber}", cardNumber)
                 .header("Accept-Version", "3")
                 .retrieve()
-                .bodyToMono(Mono.class)
-                .block();
+                .bodyToMono(BinlistResponse.class)
+                .publishOn(Schedulers.boundedElastic())
+                .map(binlistResponse -> {
+                    Card card = new Card();
+                    card.setNumber(cardNumber);
+                    card.setScheme(binlistResponse.getScheme());
+//                    card.setType(mapType(binlistResponse.getType()));
+//                    card.setBank(binlistResponse.getBank());
+//                    card.setValid(binlistResponse.isValid());
 
-        BinlistResponse binlistResponse = responseMono.block();
+                    cardRepository.save(card);
+                    // cardRepository.save(card);
 
-        // Build Card entity
-        Card card = new Card();
-        card.setNumber(cardNumber);
-//        card.setScheme(mapScheme(binlistResponse.getScheme().toString()));
-//        card.setType(mapType(binlistResponse.getType().toString()));
-        card.setBank(binlistResponse.getBank());
-//        card.setValid(binlistResponse.isValid());
-
-        // Save to DB
-//        card = cardRepository.save(card);
-log.info("this worked and => " + binlistResponse);
-        return card;
+                    log.info("Request to Binlist API successful: " + binlistResponse);
+                    return card;
+                });
+//        System.out.println(response.block().getScheme() + " test result");
+        System.out.println("working");
+        return response;
     }
 
 //    private CardScheme mapScheme(String scheme) {

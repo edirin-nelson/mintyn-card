@@ -12,7 +12,7 @@ import lombok.*;
 public class BinlistResponse {
     private String number;
 
-    private CardScheme scheme;
+    private String scheme;
 
     private CardType type;
 

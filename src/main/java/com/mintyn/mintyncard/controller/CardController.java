@@ -15,6 +15,6 @@ public class CardController {
     @GetMapping("{cardNumber}")
     public ResponseEntity<?> testCard(@PathVariable String cardNumber){
         cardService.verifyCard(cardNumber);
-        return ResponseEntity.ok("e da work");
+        return (ResponseEntity<?>) ResponseEntity.ok();
     }
 }
